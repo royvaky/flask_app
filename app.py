@@ -1,13 +1,19 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+
 app = Flask(__name__)
+
+latest_data = {}
 
 @app.route('/')
 def home():
-    return "✅ Flask is working with Anaconda!"
+    return "✅ Flask is running!"
 
-@app.route('/show')
+@app.route('/update', methods=['POST'])
+def update():
+    global latest_data
+    latest_data = request.json
+    return jsonify({"status": "✅ Received", "data": latest_data})
+
+@app.route('/show', methods=['GET'])
 def show():
-    return "🚀 Route /show is working"
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return jsonify(latest_data)
