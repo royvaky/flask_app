@@ -24,8 +24,12 @@ def show_html():
     <!DOCTYPE html>
     <html>
     <head>
-        <meta http-equiv="refresh" content="60">
         <title>Live LTP</title>
+        <script>
+            setTimeout(function(){
+               window.location.reload(1);
+            }, 60000);  // 60000 ms = 60 seconds
+        </script>
     </head>
     <body>
         <h1>📈 Live Nifty & BankNifty LTP</h1>
