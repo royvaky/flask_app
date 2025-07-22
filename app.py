@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template_string
 
 app = Flask(__name__)
 
@@ -14,6 +14,23 @@ def update():
     latest_data = request.json
     return jsonify({"status": "✅ Received", "data": latest_data})
 
-@app.route('/show', methods=['GET'])
-def show():
+@app.route('/show_json', methods=['GET'])
+def show_json():
     return jsonify(latest_data)
+
+@app.route('/show', methods=['GET'])
+def show_html():
+    html_template = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta http-equiv="refresh" content="60">
+        <title>Live LTP</title>
+    </head>
+    <body>
+        <h1>📈 Live Nifty & BankNifty LTP</h1>
+        <pre>{{ data }}</pre>
+    </body>
+    </html>
+    """
+    return render_template_string(html_template, data=latest_data)
